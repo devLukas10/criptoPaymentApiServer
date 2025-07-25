@@ -18,7 +18,7 @@ const tronWeb = new TronWeb({ fullHost: API_TRONGRID_URL });
 
 export class TronServices {
 
-    private feeLimit = 5 * 10 ** 6; // 3 TRX
+    private feeLimit = 5 * 10 ** 6; // 5 TRX
     
     private converNumToSun(amount: number){
         return parseFloat(tronWeb.toSun(amount) as string);
