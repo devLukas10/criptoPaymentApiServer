@@ -1,5 +1,5 @@
 
-
+/* * TRON CONSTANTS */
 export const API_TRONGRID_URL = "https://api.shasta.trongrid.io";
 export const ENERGY = "ENERGY";
 export const BANDWIDTH = "BANDWIDTH";
@@ -9,3 +9,9 @@ export const USDT = "USDT";
 export const USDC = "USDC";
 export const TRON_USDT_CONTRACT_ADDRESS = "TG3XXyExBkPp9nzdajDZsozEu4BkaSJozs";
 export const TRON_USDC_CONTRACT_ADDRESS = "TSdZwNqpHofzP6BsBKGQUWdBeJphLmF6id";
+
+/* * BSC CONSTANTS */
+export const API_BNB_RPC_URL = {
+    testnet: "https://bsc-testnet.drpc.org",
+    mainnet: "https://bsc-dataseed1.binance.org", /* oficial for production  */
+}

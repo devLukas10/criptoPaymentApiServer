@@ -1,5 +1,5 @@
 import { TronWeb } from 'tronweb';
-import { BlockchainWalletType } from '../src/types/BlockchainWalletType';
+import { BlockchainWalletType } from '../../src/types/BlockchainWalletType';
 import {
     API_TRONGRID_URL, ENERGY, BANDWIDTH,
     TRON_USDC_CONTRACT_ADDRESS,
@@ -7,16 +7,16 @@ import {
     TRANSFER_SELECTOR,
     USDT,
     USDC
-} from '../src/types/constants';
-import { SendTransactionFrom } from '../src/types/SendTransactionFrom';
-import { SendTransactionTo } from '../src/types/SendTransactionTo';
-import { TRON_USDT_CONTRACT_ABI } from './abi/tronUsdtABI';
-import { TRON_USDC_CONTRACT_ABI } from './abi/tronUsdcABI';
+} from '../../src/types/constants';
+import { SendTransactionFrom } from '../../src/types/SendTransactionFrom';
+import { SendTransactionTo } from '../../src/types/SendTransactionTo';
+import { TRON_USDT_CONTRACT_ABI } from '../abi/tronUsdtABI';
+import { TRON_USDC_CONTRACT_ABI } from '../abi/tronUsdcABI';
 
 const tronWeb = new TronWeb({ fullHost: API_TRONGRID_URL });
 
 
-export class TronServices {
+export class TRONService {
 
     private feeLimit = 5 * 10 ** 6; // 5 TRX
     
