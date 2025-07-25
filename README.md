@@ -1,14 +1,4 @@
 
 
-## Error codes
-
-### 404 Users number or e-mail already exists
-** Authenticate user number before creating account.
-``json
-{
-    code: 404,
-    name: 'authCreateAccuntUsersIsRead',
-    message: "Users number or e-mail already exists",
-    data: [],
-}
-``
+# USDT & USDC FEES TO TRANSFERS USDT
+* 5 trx to 1 usdt || usdc
