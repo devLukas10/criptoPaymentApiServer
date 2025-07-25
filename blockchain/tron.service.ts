@@ -84,7 +84,7 @@ export class TronServices {
         } catch (err) { return err; }
     }
     
-    async getUsdtBalance(address: string): Promise<any> {
+    async getUSDTBalance(address: string): Promise<any> {
         tronWeb.setAddress(address);
         try{
             const contract = await tronWeb.contract(TRON_USDT_ABI, TRON_USDT_CONTRACT_ADDRESS);
@@ -100,6 +100,16 @@ export class TronServices {
             return new Promise((resolve, _)=> { resolve(Number(form)) })
     
         } catch (err) { return err; }
+    }
+
+    async transferUSDT({amount, to}: SendTransactionTo, {privateKey, from} : SendTransactionFrom): Promise<any> {
+        tronWeb.setPrivateKey(privateKey);
+        try{
+            const contract = await tronWeb.contract(TRON_USDT_ABI, TRON_USDT_CONTRACT_ADDRESS);
+            const tx = await contract['transfer'](to, amount)
+            .send({ from: from });
+            return new Promise((resolve, _)=> { resolve(tx) })
+        } catch(err) { console.log(err)}        
     }
 }
 
