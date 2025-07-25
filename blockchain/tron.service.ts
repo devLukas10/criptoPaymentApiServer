@@ -11,7 +11,7 @@ const tronWeb = new TronWeb({ fullHost: API_TRONGRID_URL });
 export class TronServices {
     
     converNumToSun(amount: number){
-        return parseFloat(`${tronWeb.toSun(amount)}`);
+        return parseFloat(tronWeb.toSun(amount) as string);
     }
     
     async createWallet(): Promise<BlockchainWalletType> {
@@ -26,11 +26,11 @@ export class TronServices {
         });
     }
     
-    async getBalance({address}: {address: string}): Promise<any> {
+    async getBalance(address: string): Promise<any> {
         const account =  await tronWeb.trx.getBalance(address);
         const balanceInTrx = tronWeb.fromSun(account);
         return new Promise((resolve, _)=> {
-            resolve(balanceInTrx)
+            resolve(parseFloat(balanceInTrx as string))
         })
     }
     
@@ -96,8 +96,8 @@ export class TronServices {
             const decimals = await contract['decimals']().call();
             const divisor = BigInt(10) ** BigInt(decimals);
             const formattedBalance = balance / divisor;
-            const form = parseFloat(`${formattedBalance}`).toFixed(2).replace('n', '')
-            return new Promise((resolve, _)=> { resolve(Number(form)) })
+            const form = formattedBalance.toString(10)
+            return new Promise((resolve, _)=> { resolve(parseFloat(form)) })
     
         } catch (err) { return err; }
     }
@@ -106,10 +106,27 @@ export class TronServices {
         tronWeb.setPrivateKey(privateKey);
         try{
             const contract = await tronWeb.contract(TRON_USDT_ABI, TRON_USDT_CONTRACT_ADDRESS);
-            const tx = await contract['transfer'](to, amount)
+            const amountToSend = BigInt(amount * 10 ** 6);
+            const tx = await contract['transfer'](to, amountToSend)
             .send({ from: from });
             return new Promise((resolve, _)=> { resolve(tx) })
-        } catch(err) { console.log(err)}        
+        } catch(err) { return err; }        
+    }
+
+    async findUsdtTransferEstimateEnergy(address: string, amount: number): Promise<any>{
+        tronWeb.setAddress(address);
+        try {
+            const functionSelector = 'transfer(address,uint256)';
+            const parameter = [{type:'address',value: address},{type:'uint256',value: amount}];
+            const tx = await tronWeb.transactionBuilder.estimateEnergy(TRON_USDT_CONTRACT_ADDRESS, functionSelector, {}, parameter);
+            return new Promise((resolve, _)=> { resolve(tx) })
+        } catch(err) { return err; }
+    }
+
+    async getTransactionFee(txID: string): Promise<any>{
+        let txInfo = await tronWeb.trx.getTransactionInfo(txID);
+        let tx = parseFloat(tronWeb.fromSun(txInfo.fee) as string)
+        return new Promise((resolve, _)=> { resolve(tx) })
     }
 }
 
