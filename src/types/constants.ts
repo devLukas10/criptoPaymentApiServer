@@ -9,3 +9,11 @@ export const USDT = "USDT";
 export const USDC = "USDC";
 export const TRON_USDT_CONTRACT_ADDRESS = "TG3XXyExBkPp9nzdajDZsozEu4BkaSJozs";
 export const TRON_USDC_CONTRACT_ADDRESS = "TSdZwNqpHofzP6BsBKGQUWdBeJphLmF6id";
+
+
+
+
+/** ETH */
+export const ETH_PROVIDERS = {
+    testnet: "https://sepolia.drpc.org", // for testnet provider
+}
