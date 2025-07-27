@@ -1,10 +1,15 @@
 import { ethers } from "ethers";
-import { ETH_PROVIDERS } from "../src/types/constants";
+import {
+    ETH_PROVIDERS,
+    ETH_USDC_CONTRACT_ADDRESS, 
+    ETH_USDT_CONTRACT_ADDRESS
+} from "../src/types/constants";
 import { BlockchainWalletType } from "../src/types/BlockchainWalletType";
 import { EtherFormatWei } from "../src/utils/etherFormatWei";
+import { ERC_USDT_ABI } from "./abi/ercUsdtABI";
 
 
-const provider = new ethers.JsonRpcProvider(ETH_PROVIDERS.testnet);
+const provider = new ethers.JsonRpcProvider(ETH_PROVIDERS);
 
 
 export class ETHService{
@@ -40,6 +45,32 @@ export class ETHService{
         }
     }
 
+    async getUSDTBalance (address: string): Promise<number> {
+        const erc20 = new ethers.Contract(ETH_USDT_CONTRACT_ADDRESS, ERC_USDT_ABI, provider);
+        try {
+            const balance = await erc20["balanceOf"](address);
+            const decimals = await erc20["decimals"]();
+            const tx = ethers.formatUnits(balance, decimals);
+
+            return parseFloat(tx);
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async getUSDCBalance (address: string): Promise<any> {
+        const erc20 = new ethers.Contract(ETH_USDC_CONTRACT_ADDRESS, ERC_USDT_ABI, provider);
+        try {
+            const balance = await erc20["balanceOf"](address);
+            const decimals = await erc20["decimals"]();
+            const tx = ethers.formatUnits(balance, decimals);
+
+            return parseFloat(tx);
+        } catch (err) {
+            throw err
+        }
+    }
+
     async getETHTransactioByHash(hash: string): Promise<any> {
         try{
             const tx = await provider.getTransactionReceipt(hash);
@@ -49,10 +80,6 @@ export class ETHService{
             throw err
         }
     }
-    
-
-
-
 
     async transferETH(privateKey: string, to: string, amount: string): Promise<any> {
         
@@ -76,4 +103,6 @@ export class ETHService{
             throw err
         }
     }
+
+    
 }

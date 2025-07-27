@@ -1,4 +1,4 @@
-export const TRON_USDT_CONTRACT_ABI = [
+export const TRON_USDT_ABI = [
     {
       "type": "constructor",
       "stateMutability": "nonpayable"
@@ -125,6 +125,5 @@ export const TRON_USDT_CONTRACT_ABI = [
     }
   ]
   
-
 
 
