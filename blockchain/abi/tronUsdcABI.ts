@@ -1,4 +1,4 @@
-export const TRON_USDC_CONTRACT_ABI = [
+export const TRON_USDC_ABI = [
   {
     "constant": true,
     "inputs": [],

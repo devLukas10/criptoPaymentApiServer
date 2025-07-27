@@ -1,23 +1,22 @@
-import { TronServices } from "../blockchain/tron.service";
+import { ETHService } from "../blockchain/EthChain";
 
+const eth = new ETHService();
+const address = '0xD7e9A4061451297A431aF1ABd17aF077b99E4eE2';
+const privateKey = "0x292435042c5f78b91901e7a56a1300a1f015201d2c07dbc6275a1f27d676039d";
 
-const address = "TZHZwLFpuP1ZMUa36RHYhXNSwtCvduNGoG";
-const pKey = '4068CE686B3F2A601FFABEAF17A25F4E7BB62639D79F570826E9BAC6F9F45997';
-const to = 'TZHZwLFpuP1ZMUa36RHYhXNSwtCvduNGoG';
-const to2 = "TFkrkTqzVGPtf4wM6qDPg9iNAuw6YNSVQk";
-const tron = new TronServices();
+const to = "0x8c62261B33Ec0813a85E6b5bAe2848B675a10FbA";
 
-async function test() {
-    //let result = await tron.transferUSDT({amount: 10, to: to2}, {from: address, privateKey: pKey});
-    //let result = await tron.getTransactionFee('0f16312cf6113fe5be9b956b9a1caac77edd7ecf1534365379517bf84421f4bc')
-    //let result = await tron.getEstimateEnergy(address, 10, "USDT")
-    //let result = await tron.getTRXAccount(to)
-    //let result = await tron.getTRXBalance(to);
-    //console.log(result)
-    //let result = await tron.getUSDTBalance(to);
-    //console.log("USDT (TRC20)= " + await tron.getUSDTBalance(to))
-    //console.log("USDC (TRC20)= " + await tron.getUSDCBalance(to))
-    console.log("TRX= "+ await tron.getTRXBalance(to))
-}
+(async ()=> {
+    /*
+    await eth.transferEURC(
+        privateKey, 
+        to, 
+        2.5, 
+        async (hash: any) => console.log("pedding: " +hash),
+        async ()=>  console.log("sucess: ")
+    );
+    */
+    let result = await eth.getETHTransactioByHash("0xd8af07fdf149e75073423a94077ef1bf4b0c648a10b8def1179d6d4b7fa88873");
 
-test()
+    console.log(result)
+})()

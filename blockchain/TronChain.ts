@@ -10,13 +10,13 @@ import {
 } from '../src/types/constants';
 import { SendTransactionFrom } from '../src/types/SendTransactionFrom';
 import { SendTransactionTo } from '../src/types/SendTransactionTo';
-import { TRON_USDT_CONTRACT_ABI } from './abi/tronUsdtABI';
-import { TRON_USDC_CONTRACT_ABI } from './abi/tronUsdcABI';
+import { TRON_USDT_ABI } from './abi/tronUsdtABI';
+import { TRON_USDC_ABI } from './abi/tronUsdcABI';
 
 const tronWeb = new TronWeb({ fullHost: API_TRONGRID_URL });
 
 
-export class TronServices {
+export class TronChain{
 
     private feeLimit = 5 * 10 ** 6; // 5 TRX
     
@@ -126,7 +126,7 @@ export class TronServices {
     async getUSDTBalance(address: string): Promise<any> {
         tronWeb.setAddress(address);
         try{
-            const contract = await tronWeb.contract(TRON_USDT_CONTRACT_ABI, TRON_USDT_CONTRACT_ADDRESS);
+            const contract = await tronWeb.contract(TRON_USDT_ABI, TRON_USDT_CONTRACT_ADDRESS);
             const balance = await contract['balanceOf']
                 (address)
             .call();
@@ -160,7 +160,7 @@ export class TronServices {
     async getUSDCBalance(address: string): Promise<any>{
         tronWeb.setAddress(address);
         try{
-            const contract = await tronWeb.contract(TRON_USDC_CONTRACT_ABI, TRON_USDC_CONTRACT_ADDRESS);
+            const contract = await tronWeb.contract(TRON_USDC_ABI, TRON_USDC_CONTRACT_ADDRESS);
             const balance = await contract['balanceOf']
                 (address)
             .call();
@@ -187,7 +187,7 @@ export class TronServices {
     async transferUSDC({amount, to}: SendTransactionTo, {privateKey, from} : SendTransactionFrom): Promise<any> {
         tronWeb.setPrivateKey(privateKey);
         try{
-            const contract = await tronWeb.contract(TRON_USDC_CONTRACT_ABI, TRON_USDC_CONTRACT_ADDRESS);
+            const contract = await tronWeb.contract(TRON_USDC_ABI, TRON_USDC_CONTRACT_ADDRESS);
             const tx = await contract['transfer'](to, this.converNumToSunContract(amount))
             .send({
                 from: from,
@@ -202,7 +202,7 @@ export class TronServices {
     async transferUSDT({amount, to}: SendTransactionTo, {privateKey, from} : SendTransactionFrom): Promise<any> {
         tronWeb.setPrivateKey(privateKey);
         try{
-            const contract = await tronWeb.contract(TRON_USDT_CONTRACT_ABI, TRON_USDT_CONTRACT_ADDRESS);
+            const contract = await tronWeb.contract(TRON_USDT_ABI, TRON_USDT_CONTRACT_ADDRESS);
             const tx = await contract['transfer'](to, this.converNumToSunContract(amount))
             .send({ 
                 from: from, 
