@@ -16,7 +16,7 @@ import { TRON_USDC_ABI } from './abi/tronUsdcABI';
 const tronWeb = new TronWeb({ fullHost: API_TRONGRID_URL });
 
 
-export class TronServices {
+export class TronChainServices {
 
     private feeLimit = 5 * 10 ** 6; // 5 TRX
     

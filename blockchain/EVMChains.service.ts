@@ -1,27 +1,35 @@
 import { ethers } from "ethers";
-import {
-    ETH_EUR_CONTRACT_ADDRESS,
-    ETH_PROVIDERS,
-    ETH_USDC_CONTRACT_ADDRESS, 
-    ETH_USDT_CONTRACT_ADDRESS
-} from "../src/types/constants";
 import { BlockchainWalletType } from "../src/types/BlockchainWalletType";
 import { EtherFormatWei } from "../src/utils/etherFormatWei";
 import { ERC_USDT_ABI } from "./abi/ercUsdtABI";
 
+interface EVM {
+    rpcUrl: string,
+    usdtContract: string,
+    usdcContract: string,
+    eurcContract: string
+}
 
-const provider = new ethers.JsonRpcProvider(ETH_PROVIDERS);
-
-
-export class ETHService{
-
+export class EVMChains{
+    
+    private provider: ethers.JsonRpcProvider;
+    private usdtContract: string;
+    private usdcContract: string;
+    private eurcContract: string;
+    
     private gasLimit: number = 21000;
     private maxFeePerGas = ethers.parseUnits("30", "gwei");
     private maxPriorityFeePerGas = ethers.parseUnits("2", "gwei");
 
+    constructor({rpcUrl, usdtContract, usdcContract, eurcContract}: EVM){
+        this.provider = new ethers.JsonRpcProvider(rpcUrl);
+        this.usdtContract = usdtContract;
+        this.usdcContract = usdcContract;
+        this.eurcContract = eurcContract;
+    }
 
     private async transferToken(privateKey:string, to: string, amount: number, contract: string): Promise<any>{
-        const wallet = new ethers.Wallet(privateKey, provider);
+        const wallet = new ethers.Wallet(privateKey, this.provider);
         const erc20 = new ethers.Contract(contract, ERC_USDT_ABI, wallet);
         const decimals = await erc20["decimals"]();
         const tx = await erc20["transfer"](to, ethers.parseUnits(amount.toString(), decimals));
@@ -30,7 +38,7 @@ export class ETHService{
     }
 
     private async getTokenBalance (address: string, contract: string): Promise<number> {
-        const erc20 = new ethers.Contract(contract, ERC_USDT_ABI, provider);
+        const erc20 = new ethers.Contract(contract, ERC_USDT_ABI, this.provider);
         const balance = await erc20["balanceOf"](address);
         const decimals = await erc20["decimals"]();
         const tx = ethers.formatUnits(balance, decimals);
@@ -40,7 +48,7 @@ export class ETHService{
 
     async createWallet(): Promise<BlockchainWalletType> {
         try{
-            const account = ethers.Wallet.createRandom(provider);
+            const account = ethers.Wallet.createRandom(this.provider);
             
             const wallet: BlockchainWalletType = {
                 address: account.address,
@@ -57,7 +65,7 @@ export class ETHService{
 
     async getETHBalance(address: string): Promise<number> {
         try{
-            const wei = await provider.getBalance(address);
+            const wei = await this.provider.getBalance(address);
 
             return EtherFormatWei(wei, ethers);
         } catch (err) {
@@ -67,7 +75,7 @@ export class ETHService{
 
     async getUSDTBalance (address: string): Promise<number> {
         try {
-            return await this.getTokenBalance(address, ETH_USDT_CONTRACT_ADDRESS);
+            return await this.getTokenBalance(address, this.usdtContract);
 
         } catch (err) {
             throw err
@@ -76,7 +84,7 @@ export class ETHService{
 
     async getUSDCBalance (address: string): Promise<number> {
         try {
-            return await this.getTokenBalance(address, ETH_USDC_CONTRACT_ADDRESS);
+            return await this.getTokenBalance(address, this.usdcContract);
 
         } catch (err) {
             throw err
@@ -85,7 +93,7 @@ export class ETHService{
 
     async getEURCBalance (address: string): Promise<number> {
         try {
-            return await this.getTokenBalance(address, ETH_EUR_CONTRACT_ADDRESS);
+            return await this.getTokenBalance(address, this.eurcContract);
 
         } catch (err) {
             throw err
@@ -94,7 +102,7 @@ export class ETHService{
 
     async getETHTransactioByHash(hash: string): Promise<any> {
         try{
-            const tx = await provider.getTransactionReceipt(hash);
+            const tx = await this.provider.getTransactionReceipt(hash);
 
             return tx;
         } catch (err) {
@@ -105,7 +113,7 @@ export class ETHService{
     async transferETH(privateKey: string, to: string, amount: number): Promise<any> {
         
         try {
-            const wallet = new ethers.Wallet(privateKey, provider);
+            const wallet = new ethers.Wallet(privateKey, this.provider);
 
             const signedTx = await wallet.signTransaction({
                 to: to,
@@ -113,12 +121,12 @@ export class ETHService{
                 gasLimit: this.gasLimit,
                 maxFeePerGas: this.maxFeePerGas,
                 maxPriorityFeePerGas: this.maxPriorityFeePerGas,
-                nonce: await provider.getTransactionCount(wallet.address),
-                chainId: (await provider.getNetwork()).chainId,
+                nonce: await this.provider.getTransactionCount(wallet.address),
+                chainId: (await this.provider.getNetwork()).chainId,
                 type: 2, // EIP-1559
             })
 
-            const tx = await provider.broadcastTransaction(signedTx);
+            const tx = await this.provider.broadcastTransaction(signedTx);
             return tx
         } catch (err) {
             throw err
@@ -127,7 +135,7 @@ export class ETHService{
 
     async transferUSDC(privateKey:string, to: string, amount: number, call: (tx: any)=>{}, sucess: (tx: any)=>{}): Promise<any> {        
         try{
-            const tx = await this.transferToken(privateKey, to, amount, ETH_USDC_CONTRACT_ADDRESS);
+            const tx = await this.transferToken(privateKey, to, amount, this.usdcContract);
             call(tx.hash);
 
             await tx.wait();
@@ -137,13 +145,13 @@ export class ETHService{
         }
     }
 
-    async transferEURC(privateKey:string, to: string, amount: number, call: (tx: any)=>{}, sucess: (tx: any)=>{}): Promise<any> {        
+    async transferEURC(privateKey:string, to: string, amount: number, call?: (tx: any)=>{}, sucess?: (tx: any)=>{}): Promise<any> {        
         try{
-            const tx = await this.transferToken(privateKey, to, amount, ETH_EUR_CONTRACT_ADDRESS);
-            call(tx.hash);
+            const tx = await this.transferToken(privateKey, to, amount, this.eurcContract);
+            call?.(tx.hash);
 
             await tx.wait();
-            sucess(tx);
+            sucess?.(tx);
         } catch (err) {
             throw err
         }
@@ -151,7 +159,7 @@ export class ETHService{
 
     async transferUSDT(privateKey:string, to: string, amount: number, call: (tx: any)=>{}, sucess: (tx: any)=>{}): Promise<any> {        
         try{
-            const tx = await this.transferToken(privateKey, to, amount, ETH_USDT_CONTRACT_ADDRESS);
+            const tx = await this.transferToken(privateKey, to, amount, this.usdtContract);
             call(tx.hash);
 
             await tx.wait();
@@ -161,6 +169,4 @@ export class ETHService{
         }
     }
 
-
-    
 }

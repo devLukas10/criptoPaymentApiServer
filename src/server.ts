@@ -1,4 +1,4 @@
-import { ETHService } from "../blockchain/eth.service";
+import { ETHService } from "../blockchain/EthChain.service";
 
 const eth = new ETHService();
 const address = '0xD7e9A4061451297A431aF1ABd17aF077b99E4eE2';
