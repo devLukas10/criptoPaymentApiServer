@@ -16,7 +16,7 @@ const to = "0x8c62261B33Ec0813a85E6b5bAe2848B675a10FbA";
         async ()=>  console.log("sucess: ")
     );
     */
-    let result = await eth.getEURCBalance(to);
+    let result = await eth.getETHTransactioByHash("0xd8af07fdf149e75073423a94077ef1bf4b0c648a10b8def1179d6d4b7fa88873");
 
     console.log(result)
 })()
