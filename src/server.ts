@@ -7,7 +7,16 @@ const privateKey = "0x292435042c5f78b91901e7a56a1300a1f015201d2c07dbc6275a1f27d6
 const to = "0x8c62261B33Ec0813a85E6b5bAe2848B675a10FbA";
 
 (async ()=> {
-    let result = await eth.getUSDTBalance(address);
+    /*
+    await eth.transferEURC(
+        privateKey, 
+        to, 
+        2.5, 
+        async (hash: any) => console.log("pedding: " +hash),
+        async ()=>  console.log("sucess: ")
+    );
+    */
+    let result = await eth.getEURCBalance(to);
 
     console.log(result)
 })()
