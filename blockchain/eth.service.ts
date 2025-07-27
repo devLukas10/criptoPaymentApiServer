@@ -40,13 +40,25 @@ export class ETHService{
         }
     }
 
+    async getETHTransactioByHash(hash: string): Promise<any> {
+        try{
+            const tx = await provider.getTransactionReceipt(hash);
+
+            return tx;
+        } catch (err) {
+            throw err
+        }
+    }
+    
 
 
-    async transferETH(privateKey: string, to: string, amount: any): Promise<any> {
+
+
+    async transferETH(privateKey: string, to: string, amount: string): Promise<any> {
         
         try {
             const wallet = new ethers.Wallet(privateKey, provider);
-            /*
+
             const signedTx = await wallet.signTransaction({
                 to: to,
                 value: ethers.parseEther(amount),
@@ -59,9 +71,7 @@ export class ETHService{
             })
 
             const tx = await provider.broadcastTransaction(signedTx);
-            */
-            console.log(wallet.address)
-
+            return tx
         } catch (err) {
             throw err
         }
