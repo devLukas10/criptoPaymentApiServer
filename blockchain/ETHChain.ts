@@ -1,10 +1,10 @@
-import { BlockchainWalletType } from "../src/types/BlockchainWalletType";
+import { BlockchainWalletType } from "./types/BlockchainWalletType";
 import {
     ETH_EURC_CONTRACT_ADDRESS,
     ETH_PROVIDERS,
     ETH_USDC_CONTRACT_ADDRESS,
     ETH_USDT_CONTRACT_ADDRESS
-} from "../src/types/constants";
+} from "./types/constants";
 import { EVMChains } from "./EVMChains";
 
 

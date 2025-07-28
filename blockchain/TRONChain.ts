@@ -1,5 +1,5 @@
 import { TronWeb } from 'tronweb';
-import { BlockchainWalletType } from '../src/types/BlockchainWalletType';
+import { BlockchainWalletType } from './types/BlockchainWalletType';
 import {
     API_TRONGRID_URL, ENERGY, BANDWIDTH,
     TRON_USDC_CONTRACT_ADDRESS,
@@ -7,9 +7,9 @@ import {
     TRANSFER_SELECTOR,
     USDT,
     USDC
-} from '../src/types/constants';
-import { SendTransactionFrom } from '../src/types/SendTransactionFrom';
-import { SendTransactionTo } from '../src/types/SendTransactionTo';
+} from './types/constants';
+import { SendTransactionFrom } from './types/SendTransactionFrom';
+import { SendTransactionTo } from './types/SendTransactionTo';
 import { TRON_USDT_ABI } from './abi/tronUsdtABI';
 import { TRON_USDC_ABI } from './abi/tronUsdcABI';
 

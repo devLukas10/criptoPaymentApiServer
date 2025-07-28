@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { BlockchainWalletType } from "../src/types/BlockchainWalletType";
+import { BlockchainWalletType } from "./types/BlockchainWalletType";
 import { ERC_USDT_ABI } from "./abi/ercUsdtABI";
 
 
