@@ -1,15 +1,20 @@
 import { ETHChain } from "../blockchain/ETHChain";
+import { POLChain } from "../blockchain/POLChain";
 
 
-const eth = new ETHChain();
-const address = '0xD7e9A4061451297A431aF1ABd17aF077b99E4eE2';
-const privateKey = "0x292435042c5f78b91901e7a56a1300a1f015201d2c07dbc6275a1f27d676039d";
 
-const to = "0x8c62261B33Ec0813a85E6b5bAe2848B675a10FbA";
+const pol = new POLChain();
+const eth =  new ETHChain();
+
+
+const address = '0x158aEa9af0745d6DFED63104B3633098d29dD33f';
+const privateKey = "0xc9b6d01a5edf2bb2164b2b83736bfd15d5891937bbd52ebbe43021c2ec4861e1";
+
+const to = "0x0E06e2CcEDb5Ef2D20985A5b49B62B5bC2d204Fe";
 
 (async ()=> {
     /*
-    await eth.transferEURC(
+    await pol.transferEURC(
         privateKey, 
         to, 
         2.5, 
@@ -17,7 +22,7 @@ const to = "0x8c62261B33Ec0813a85E6b5bAe2848B675a10FbA";
         async ()=>  console.log("sucess: ")
     );
     */
-    let result = await eth.getETHBalance(to);
+    let result = await pol.getPOLBalance(address);
 
     console.log(result)
 })()

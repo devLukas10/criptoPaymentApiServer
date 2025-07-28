@@ -5,12 +5,8 @@ import { ERC_USDT_ABI } from "./abi/ercUsdtABI";
 
 export class EVMChains {
     private provider: ethers.JsonRpcProvider;
-
-    private gasLimit: number = 21000;
-    private maxFeePerGas = ethers.parseUnits("30", "gwei");
-    private maxPriorityFeePerGas = ethers.parseUnits("2", "gwei");
-
-    constructor({ rpcUrl }: {rpcUrl: string;}) {
+    
+    constructor({rpcUrl}:{rpcUrl: string}){
         this.provider = new ethers.JsonRpcProvider(rpcUrl);
     }
 
@@ -38,6 +34,10 @@ export class EVMChains {
         };
     }
 
+    async testWallet(privateKey: string): Promise<any> {
+        return new ethers.Wallet(privateKey, this.provider);
+    }
+
     // Métodos genéricos
     async getBalance(address: string): Promise<number> {
         const wei = await this.provider.getBalance(address);
@@ -46,12 +46,20 @@ export class EVMChains {
 
     async signTransfer(privateKey: string, to: string, amount: number): Promise<any> {
         const wallet = new ethers.Wallet(privateKey, this.provider);
+
+        const gasLimit = await this.provider.estimateGas({
+            to,
+            from: wallet.address,
+            value: ethers.parseEther(amount.toString()),
+        });
+          
+        const feeData = await this.provider.getFeeData();
         const signedTx = await wallet.signTransaction({
             to,
             value: ethers.parseEther(amount.toString()),
-            gasLimit: this.gasLimit,
-            maxFeePerGas: this.maxFeePerGas,
-            maxPriorityFeePerGas: this.maxPriorityFeePerGas,
+            gasLimit: gasLimit,
+            maxFeePerGas: feeData.maxFeePerGas,
+            maxPriorityFeePerGas: feeData.maxPriorityFeePerGas,
             nonce: await this.provider.getTransactionCount(wallet.address),
             chainId: (await this.provider.getNetwork()).chainId,
             type: 2,

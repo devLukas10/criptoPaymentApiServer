@@ -10,7 +10,7 @@ import { EVMChains } from "./EVMChains";
 
 export class ETHChain {
     
-    private evm = new EVMChains({ rpcUrl: ETH_PROVIDERS });
+    private evm = new EVMChains({ rpcUrl: ETH_PROVIDERS, });
 
     async createWallet(): Promise<BlockchainWalletType> {
         return await this.evm.createWallet();
