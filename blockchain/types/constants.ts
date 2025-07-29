@@ -20,3 +20,8 @@ export const ETH_EURC_CONTRACT_ADDRESS = "0x08210F9170F89Ab7658F0B5E3fF39b0E03C5
 export const POL_PROVIDERS = "https://rpc-amoy.polygon.technology"; // testnet
 export const POL_USDT_CONTRACT_ADDRESS = "0xd6ef21b20D3Bb4012808695c96A60f6032e14FB6"; // testnet
 export const POL_USDC_CONTRACT_ADDRESS = "0xc091020dD0e357989f303FC99ac5899fa343fF6D"; // testnet
+
+/** ARBITRUM ON */
+export const ARB_PROVIDERS = "https://sepolia-rollup.arbitrum.io/rpc"; // testnet
+export const ARB_USDT_CONTRACT_ADDRESS = "0x25f5D414F85b7f4668ADe4E557ef234023208771"; // testnet
+export const ARB_USDC_CONTRACT_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"; // testnet
