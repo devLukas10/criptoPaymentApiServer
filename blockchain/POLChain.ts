@@ -22,16 +22,14 @@ export class POLChain {
         return await this.evm.getBalance(address);
     }
 
-    /*
-
     async getUSDTBalance(address: string): Promise<number> {
         return await this.evm.getTokenBalance(address, POL_USDT_CONTRACT_ADDRESS);
     }
-
+    
     async getUSDCBalance(address: string): Promise<number> {
         return await this.evm.getTokenBalance(address, POL_USDC_CONTRACT_ADDRESS);
     }
-    */
+    
 
     async getTransactionbByHash(hash: string): Promise<any> {
         return await this.evm.getTransactionByHash(hash);
@@ -43,7 +41,7 @@ export class POLChain {
     }
 
     // Métodos específicos para contratos conhecidos
-    /*
+
     async transferUSDT(
         privateKey: string,
         to: string,
@@ -77,6 +75,5 @@ export class POLChain {
             async (tx: any)=> sucess(tx)
         );
     }
-    */
 
 }
