@@ -34,7 +34,7 @@ export class EVMChains {
         };
     }
 
-    async testWallet(privateKey: string): Promise<any> {
+    async checkWallet(privateKey: string): Promise<any> {
         return new ethers.Wallet(privateKey, this.provider);
     }
 
