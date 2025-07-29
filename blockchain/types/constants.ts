@@ -20,3 +20,8 @@ export const ETH_EURC_CONTRACT_ADDRESS = "0x08210F9170F89Ab7658F0B5E3fF39b0E03C5
 export const POL_PROVIDERS = "https://rpc-amoy.polygon.technology"; // testnet
 export const POL_USDT_CONTRACT_ADDRESS = "0xd6ef21b20D3Bb4012808695c96A60f6032e14FB6"; // testnet
 export const POL_USDC_CONTRACT_ADDRESS = "0xc091020dD0e357989f303FC99ac5899fa343fF6D"; // testnet
+
+/** POLYGON */
+export const OPT_PROVIDERS = "https://sepolia.optimism.io"; // testnet
+export const OPT_USDT_CONTRACT_ADDRESS = "0xd6ef21b20D3Bb4012808695c96A60f6032e14FB6"; // testnet
+export const OPT_USDC_CONTRACT_ADDRESS = "0x5fd84259d66Cd46123540766Be93DFE6D43130D7"; // testnet

@@ -1,28 +1,21 @@
-import { ETHChain } from "../blockchain/ETHChain";
-import { POLChain } from "../blockchain/POLChain";
+import { ERC_USDT_ABI } from "../blockchain/abi/ercUsdtABI";
+import { OPTChain } from "../blockchain/OPTChain";
+import { OPT_PROVIDERS, OPT_USDC_CONTRACT_ADDRESS } from "../blockchain/types/constants";
 
+const { ethers } = require("ethers");
 
+const provider = new ethers.JsonRpcProvider(OPT_PROVIDERS);
+const usdcAddress = OPT_USDC_CONTRACT_ADDRESS;
+const address = "0x2B0dDbD414f350Dc4D43B2B92325582457aa0F59";
 
-const pol = new POLChain();
-const eth =  new ETHChain();
+const opt = new OPTChain();
 
+const usdc = new ethers.Contract(usdcAddress, ERC_USDT_ABI, provider);
 
-const address = '0x158aEa9af0745d6DFED63104B3633098d29dD33f';
-const privateKey = "0xc9b6d01a5edf2bb2164b2b83736bfd15d5891937bbd52ebbe43021c2ec4861e1";
+async function showBalance() {
+  
+    console.log(await opt.getOPTBalance(address))
 
-const to = "0x0E06e2CcEDb5Ef2D20985A5b49B62B5bC2d204Fe";
+}
 
-(async ()=> {
-    /*
-    await pol.transferEURC(
-        privateKey, 
-        to, 
-        2.5, 
-        async (hash: any) => console.log("pedding: " +hash),
-        async ()=>  console.log("sucess: ")
-    );
-    */
-    let result = await pol.getPOLBalance(address);
-
-    console.log(result)
-})()
+showBalance();
