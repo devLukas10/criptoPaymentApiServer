@@ -26,6 +26,7 @@ export class EVMChains {
     // Carteira e ETH
     async createWallet(): Promise<BlockchainWalletType> {
         const account = ethers.Wallet.createRandom(this.provider);
+        console.log('✅ Carteira gerada');
         return {
             address: account.address,
             privateKey: account.privateKey,
