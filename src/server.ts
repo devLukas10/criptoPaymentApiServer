@@ -1,35 +1,82 @@
-import { ARBChain } from "../blockchain/ARBChain";
-import { ETHChain } from "../blockchain/ETHChain";
-import { POLChain } from "../blockchain/POLChain";
+import { SOLChain } from "../blockchain/SOLChain";
 
+const sol = new SOLChain();
 
-
-const pol = new POLChain();
-const eth =  new ETHChain();
-const arb = new ARBChain();
-
-
-const address = '0x158aEa9af0745d6DFED63104B3633098d29dD33f';
-const privateKey = "0xc9b6d01a5edf2bb2164b2b83736bfd15d5891937bbd52ebbe43021c2ec4861e1";
-
-const to = "0x0E06e2CcEDb5Ef2D20985A5b49B62B5bC2d204Fe";
+const address = "D1AtWNP5xxgZtjie74HWuBreRrS6de7peKEHgDC44y7H";
+const privateKey = [
+    72,
+    24,
+    244,
+    233,
+    76,
+    142,
+    252,
+    146,
+    160,
+    25,
+    0,
+    37,
+    251,
+    66,
+    79,
+    250,
+    136,
+    121,
+    95,
+    81,
+    128,
+    95,
+    0,
+    176,
+    65,
+    231,
+    119,
+    193,
+    243,
+    81,
+    219,
+    139,
+    178,
+    87,
+    108,
+    110,
+    99,
+    128,
+    86,
+    188,
+    31,
+    90,
+    138,
+    196,
+    170,
+    152,
+    6,
+    65,
+    145,
+    236,
+    178,
+    177,
+    236,
+    149,
+    116,
+    210,
+    222,
+    158,
+    200,
+    206,
+    187,
+    105,
+    107,
+    84
+];
+const to = "Avg8TkkL2Zj96gndoWT8xhskxw2oZzE8kUon4yfUKDbz";
 
 (async ()=> {
-    
-    /*
-    await pol.transferUSDC(
-        privateKey, 
-        to, 
-        10, 
-        async (hash: any) => console.log("pedding: " +hash),
-        async ()=>  console.log("sucess: ")
-    );
-    */
-    
-    //let result = await arb.transferETH(privateKey, to, 0.01);
-    //console.log(result)
 
-    console.log("POL: " + await pol.getPOLBalance(to))
-    console.log("USDC: " + await pol.getUSDCBalance(to))
-    //console.log("USDT: " + await arb.getUSDTBalance(address))
+    //await sol.createWallet()
+
+    console.log("SOL= "+ await sol.getSOLBalance(to))
+    console.log("USDC= "+ await sol.getUSDCBalance(to))
+    console.log("USDT= "+ await sol.getUSDTBalance(to))
+
 })()
