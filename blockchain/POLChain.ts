@@ -13,7 +13,7 @@ export class POLChain {
         return await this.evm.createWallet();
     }
 
-    async testWallet(privateKey: string): Promise<any> {
+    async checkWallet(privateKey: string): Promise<any> {
         return await this.evm.checkWallet(privateKey);
     }
 

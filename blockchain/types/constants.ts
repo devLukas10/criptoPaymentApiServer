@@ -25,3 +25,8 @@ export const POL_USDC_CONTRACT_ADDRESS = "0x41e94eb019c0762f9bfcf9fb1e58725bfb0e
 export const ARB_PROVIDERS = "https://sepolia-rollup.arbitrum.io/rpc"; // testnet
 export const ARB_USDT_CONTRACT_ADDRESS = "0x25f5D414F85b7f4668ADe4E557ef234023208771"; // testnet
 export const ARB_USDC_CONTRACT_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"; // testnet
+
+/** ARBITRUM ON */
+export const BSC_PROVIDERS = "https://bsc-testnet.drpc.org"; // testnet
+export const BSC_USDT_CONTRACT_ADDRESS = "0x25f5D414F85b7f4668ADe4E557ef234023208771"; // testnet
+export const BSC_USDC_CONTRACT_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"; // testnet
