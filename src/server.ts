@@ -1,8 +1,9 @@
 import { APTOChain } from "../blockchain/APTOChain";
-
+import { ATPWebhook } from "../blockchain/utils/ChainWebhook";
 const apt = new APTOChain({network: 'TESTNET'});
+const wh = new ATPWebhook({network: 'TESTNET'})
 
-async function test(){
+async function run(){
     
     const from = {
         address: '0xc2c6b8eb5657ef5edd68a0159cff13e8f0171ee095e16737e0a01e6a495b33f3',
@@ -16,9 +17,13 @@ async function test(){
     }
     //await apt.fundAccount(account.privateKey, 100);
     //console.log(await apt.transferAPT(from.privateKey, to.address, 0.005))
-    //console.log(await apt.transferUSDC(from.privateKey, to.address, 2))
-    console.log(await apt.getUSDCBalance(to.address))
+    //console.log(await apt.transferUSDC(from.privateKey, to.address, 0.05))
+    //console.log(await apt.getUSDCBalance(to.address))
+    //await wh.checkBalances([from.address, to.address]);
+
+    //console.log(await wh.getTransactionBy([to.address, from.address], "USDC"));
+
+    
 }
 
-
-test()
+run()

@@ -6,22 +6,19 @@ import {
   Account,
   Ed25519PrivateKey,
   AccountAddress,
-  AccountAddressInput
+  AccountAddressInput,
 } from "@aptos-labs/ts-sdk";
-
-
-type network = "DEVNET" | "TESTNET" | "MAINNET"
-
+import { NetworkTypes } from "./types/NetworkType";
 
 
 export class APTOChain {
     private aptos: Aptos;
     private decimal: number;
-    private network: network;
+    private network: NetworkTypes;
     private USDCFugibleTestNet: string = "0x69091fbab5f7d635ee7ac5098cf0c1efbe31d68fec0f2cd565e8d168daf52832";
     private USDCFugibleMainnt: string = "0x69091fbab5f7d635ee7ac5098cf0c1efbe31d68fec0f2cd565e8d168daf52832";
 
-    constructor({ network }: { network: network }) {
+    constructor({ network }: { network: NetworkTypes }) {
         const config: AptosConfig = new AptosConfig({
         network:
             network === "DEVNET"
@@ -122,5 +119,4 @@ export class APTOChain {
         return response.hash;
     }
 
-  
 }
