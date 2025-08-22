@@ -28,11 +28,17 @@
 
   "dependencies": {
 
+    "@aptos-labs/ts-sdk": "^4.0.0",
+
     "@solana/kit": "^0.0.0",
 
     "@solana/spl-token": "^0.4.13",
 
     "@solana/web3.js": "^1.98.2",
+
+    "apto": "^0.1.12",
+
+    "axios": "^1.11.0",
 
     "bcryptjs": "^3.0.2",
 

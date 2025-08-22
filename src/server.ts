@@ -1,82 +1,24 @@
-import { SOLChain } from "../blockchain/SOLChain";
+import { APTOChain } from "../blockchain/APTOChain";
 
-const sol = new SOLChain();
+const apt = new APTOChain({network: 'TESTNET'});
 
-const address = "D1AtWNP5xxgZtjie74HWuBreRrS6de7peKEHgDC44y7H";
-const privateKey = [
-    72,
-    24,
-    244,
-    233,
-    76,
-    142,
-    252,
-    146,
-    160,
-    25,
-    0,
-    37,
-    251,
-    66,
-    79,
-    250,
-    136,
-    121,
-    95,
-    81,
-    128,
-    95,
-    0,
-    176,
-    65,
-    231,
-    119,
-    193,
-    243,
-    81,
-    219,
-    139,
-    178,
-    87,
-    108,
-    110,
-    99,
-    128,
-    86,
-    188,
-    31,
-    90,
-    138,
-    196,
-    170,
-    152,
-    6,
-    65,
-    145,
-    236,
-    178,
-    177,
-    236,
-    149,
-    116,
-    210,
-    222,
-    158,
-    200,
-    206,
-    187,
-    105,
-    107,
-    84
-];
-const to = "Avg8TkkL2Zj96gndoWT8xhskxw2oZzE8kUon4yfUKDbz";
+async function test(){
+    
+    const from = {
+        address: '0xc2c6b8eb5657ef5edd68a0159cff13e8f0171ee095e16737e0a01e6a495b33f3',
+        publicKey: '0x0a0f21756ca2bf01ce5b3a1011558fdc602ee2ceae72200f765bfc9ee2fb6c22',
+        privateKey: 'ed25519-priv-0x3fbfb557fc13fd99fa7b592dbc781e865bc668202963601842fdcdf103d4779e'
+    };
+    const to = {
+        address: '0x86abcdda21b44b136285443ee90aa61de62d248754b0d1245ef7173bcf836da6',
+        publicKey: '0xb3dad3dd67d07a320983e432b473bcb463e27ac503a6d09ddff5e940909e1992',
+        privateKey: 'ed25519-priv-0x656da01a65669401ecc117b8f831b6ea5456cfef03ff19d97af3e1a11bbcc565'
+    }
+    //await apt.fundAccount(account.privateKey, 100);
+    //console.log(await apt.transferAPT(from.privateKey, to.address, 0.005))
+    //console.log(await apt.transferUSDC(from.privateKey, to.address, 2))
+    console.log(await apt.getUSDCBalance(to.address))
+}
 
-(async ()=> {
 
-    //await sol.createWallet()
-
-    console.log("SOL= "+ await sol.getSOLBalance(to))
-    console.log("USDC= "+ await sol.getUSDCBalance(to))
-    console.log("USDT= "+ await sol.getUSDTBalance(to))
-
-})()
+test()
