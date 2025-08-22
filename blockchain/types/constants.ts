@@ -21,10 +21,19 @@ export const POL_PROVIDERS = "https://rpc-amoy.polygon.technology"; // testnet
 export const POL_USDT_CONTRACT_ADDRESS = "0xd6ef21b20D3Bb4012808695c96A60f6032e14FB6"; // testnet
 export const POL_USDC_CONTRACT_ADDRESS = "0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582"; // testnet
 
+/** OPTIMISM */ 
+export const OPTIMISM_PROVIDERS = "https://sepolia.optimism.io"; // testnet
+export const OPTIMISM_USDC_CONTRACT_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"; // testnet
+
 /** ARBITRUM ON */
 export const ARB_PROVIDERS = "https://sepolia-rollup.arbitrum.io/rpc"; // testnet
 export const ARB_USDT_CONTRACT_ADDRESS = "0x25f5D414F85b7f4668ADe4E557ef234023208771"; // testnet
 export const ARB_USDC_CONTRACT_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"; // testnet
+
+/** APTO */
+export const APTO_PROVIDERS_DEVNET = 'https://fullnode.devnet.aptoslabs.com/v1'; // testnet
+export const APTO_PROVIDERS_TESTNET = 'https://fullnode.testnet.aptoslabs.com/v1'; // testnet
+export const APTO_PROVIDERS_MAINNET = 'https://fullnode.mainnet.aptoslabs.com/v1';
 
 /** SOLANA */
 export const SOL_PROVIDERS = "devnet"; // testnet | devnet | mainnet-beta
