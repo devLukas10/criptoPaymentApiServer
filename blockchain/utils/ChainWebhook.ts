@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { ethers } from "ethers";
 import { NetworkTypes } from "../types/NetworkType";
 import {
     ATPHookData,
@@ -9,6 +10,12 @@ import {
     APT_HOOK_MAINNET,
     APT_HOOK_TESTNET
 } from "../types/HookUrls"; 
+import { ERC_USDT_ABI } from "../abi/ercUsdtABI";
+
+
+
+
+
 
 export class ATPWebhook {
     private provider: string;
@@ -102,6 +109,71 @@ export class ATPWebhook {
     
 }
 
+export class EVMWatcher {
+    private provider: ethers.WebSocketProvider;
+
+    constructor({ wssUrl }: { wssUrl: string }) {
+        this.provider = new ethers.WebSocketProvider(wssUrl);
+    }
+
+    async getTokenBalance(address: string, contract: string): Promise<number> {
+        const erc20 = new ethers.Contract(contract, ERC_USDT_ABI, this.provider);
+        const balance = await erc20["balanceOf"](address);
+        const decimals = await erc20["decimals"]();
+        return parseFloat(ethers.formatUnits(balance, decimals));
+    }
+
+    watchNativeTx(address: string, callback: (tx: any) => void) {
+        this.provider.on("pending", async (txHash) => {
+            try {
+                const tx = await this.provider.getTransaction(txHash);
+                if (!tx) return;
+
+                if (
+                    tx.to &&
+                    tx.to.toLowerCase() === address.toLowerCase() ||
+                    tx.from.toLowerCase() === address.toLowerCase()
+                    ) {
+                    callback(tx);
+                }
+            } catch (err) {
+                // pode ignorar erros de tx não encontrada
+            }
+        });
+    }
+
+    watchTokenTransfers(
+        contractAddress: string,
+        addresses: string[],
+        callback: (event: {
+            from: string;
+            to: string;
+            value: string;
+            tokenBalance: number;
+            txHash: string;
+        }) => void
+    ) {
+
+        const token = new ethers.Contract(contractAddress, ERC_USDT_ABI, this.provider);
+        const walletAddresses = new Set(addresses);
+
+        token.on("Transfer", async (from, to, value, event) => {
+            if (walletAddresses.has(from.toLowerCase()) || walletAddresses.has(to.toLowerCase())) {
+              const addr = walletAddresses.has(to.toLowerCase()) ? to : from;
+              const balance = await this.getTokenBalance(addr, contractAddress);
+                
+              callback({
+                from: from,
+                to: to,
+                value: value,
+                tokenBalance: balance,
+                txHash: event.transactionHash
+              });
+            }
+        });
+    }
+}
+
 
 
 
@@ -115,4 +187,5 @@ export class ATPWebhook {
 export type funMethods = "Withdraw" | "Deposit";
 export type symbols = "USDC"
 | "USDT"
+| "JMPT"
 | "APT";

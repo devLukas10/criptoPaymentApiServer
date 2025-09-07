@@ -31,7 +31,7 @@ export class EVMChains {
             address: account.address,
             privateKey: account.privateKey,
             phrase: account.mnemonic?.phrase,
-            password: account.mnemonic?.password,
+            password: account.mnemonic?.password
         };
     }
 

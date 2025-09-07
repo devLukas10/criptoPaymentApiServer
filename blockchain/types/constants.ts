@@ -10,6 +10,19 @@ export const BALANCE_OF = 'balanceOf(address)'; // testnet
 export const TRON_USDT_CONTRACT_ADDRESS = "TG3XXyExBkPp9nzdajDZsozEu4BkaSJozs"; // testnet
 export const TRON_USDC_CONTRACT_ADDRESS = "TSdZwNqpHofzP6BsBKGQUWdBeJphLmF6id"; // testnet
 
+/** BSC */
+export const BSC_CHAINS_PROVIDERS = {
+    BSC_TESTNET_PROVIDERS: "https://bsc-testnet.drpc.org", // testnet
+    BSC_MAINNET_PROVIDERS: "https://bsc-rpc.publicnode.com", // mainnet
+
+    BSC_TESTNET_USDT_CONTRACT_ADDRESS: "0x55d398326f99059fF775485246999027B3197955", // testnet
+    BSC_TESTNET_JMPT_CONTRACT_ADDRESS: "0x55d398326f99059fF775485246999027B3197955", // testnet
+    
+    BSC_MAINNET_USDT_CONTRACT_ADDRESS: "0x55d398326f99059fF775485246999027B3197955", // mainnet
+    BSC_MAINNET_JMPT_CONTRACT_ADDRESS: "0x88D7e9B65dC24Cf54f5eDEF929225FC3E1580C25", // mainnet
+}
+
+
 /** ETH */
 export const ETH_PROVIDERS = "https://sepolia.drpc.org"; // testnet
 export const ETH_USDT_CONTRACT_ADDRESS = "0x7169D38820dfd117C3FA1f22a697dBA58d90BA06"; // testnet
