@@ -12,8 +12,8 @@ export const TRON_USDC_CONTRACT_ADDRESS = "TSdZwNqpHofzP6BsBKGQUWdBeJphLmF6id"; 
 
 /** BSC */
 export const BSC_CHAINS_PROVIDERS = {
-    BSC_TESTNET_PROVIDERS: "https://bsc-testnet.drpc.org", // testnet
-    BSC_MAINNET_PROVIDERS: "https://bsc-rpc.publicnode.com", // mainnet
+    BSC_TESTNET_PROVIDERS: "https://data-seed-prebsc-1-s1.binance.org:8545/", // testnet
+    BSC_MAINNET_PROVIDERS: "https://bsc-dataseed.binance.org/", // mainnet
 
     BSC_TESTNET_USDT_CONTRACT_ADDRESS: "0x55d398326f99059fF775485246999027B3197955", // testnet
     BSC_TESTNET_JMPT_CONTRACT_ADDRESS: "0x55d398326f99059fF775485246999027B3197955", // testnet

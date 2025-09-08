@@ -1,3 +1,4 @@
+import { TransactionReceipt, TransactionResponseParams } from "ethers";
 import { EVMChains } from "./EVMChains";
 import { BlockchainWalletType } from "./types/BlockchainWalletType";
 import { BSC_CHAINS_PROVIDERS } from "./types/constants";
@@ -29,6 +30,10 @@ export class BSC_CHAINS {
         return await this.evm.checkWallet(privateKey);
     }
 
+    async getTransactionByHash(hash: string): Promise<TransactionReceipt> {
+        return await this.evm.getTransactionByHash(hash);
+    }
+
     // Métodos genéricos
     async getBNBBalance(address: string): Promise<number> {
         return await this.evm.getBalance(address);
@@ -49,7 +54,7 @@ export class BSC_CHAINS {
     }
 
     // Métodos específicos chain conhecido
-    async transferBNB(privateKey: string, to: string, amount: number): Promise<any> {
+    async transferBNB(privateKey: string, to: string, amount: number): Promise<TransactionResponseParams> {
         return await this.evm.signTransfer(privateKey, to, amount);
     }
 
@@ -58,16 +63,12 @@ export class BSC_CHAINS {
         privateKey: string,
         to: string,
         amount: number,
-        call: (hash: string) => void,
-        sucess: (tx: any) => void
-    ): Promise<any> {
+    ): Promise<TransactionResponseParams> {
         return await this.evm.transferToken(
             privateKey,
             to,
             amount, 
-            BSC_CHAINS_PROVIDERS.BSC_MAINNET_USDT_CONTRACT_ADDRESS, 
-            async (hash: string)=> call(hash), 
-            async (tx: any)=> sucess(tx)
+            BSC_CHAINS_PROVIDERS.BSC_MAINNET_USDT_CONTRACT_ADDRESS
         );
     }
     
@@ -75,16 +76,12 @@ export class BSC_CHAINS {
         privateKey: string,
         to: string,
         amount: number,
-        call: (hash: string) => void,
-        sucess: (tx: any) => void
-    ): Promise<any> {
+    ): Promise<TransactionResponseParams> {
         return await this.evm.transferToken(
             privateKey,
             to,
             amount, 
-            BSC_CHAINS_PROVIDERS.BSC_MAINNET_JMPT_CONTRACT_ADDRESS, 
-            async (hash: string)=> call(hash), 
-            async (tx: any)=> sucess(tx)
+            BSC_CHAINS_PROVIDERS.BSC_MAINNET_JMPT_CONTRACT_ADDRESS,
         );
     }
 

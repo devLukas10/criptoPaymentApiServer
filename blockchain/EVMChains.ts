@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers, TransactionReceipt, TransactionResponseParams } from "ethers";
 import { BlockchainWalletType } from "./types/BlockchainWalletType";
 import { ERC_USDT_ABI } from "./abi/ercUsdtABI";
 
@@ -45,31 +45,53 @@ export class EVMChains {
         return this.formatWei(wei, ethers);
     }
 
-    async signTransfer(privateKey: string, to: string, amount: number): Promise<any> {
+    async signTransfer(privateKey: string, to: string, amount: number): Promise<TransactionResponseParams> {
         const wallet = new ethers.Wallet(privateKey, this.provider);
-
+        const network = await this.provider.getNetwork();
+    
         const gasLimit = await this.provider.estimateGas({
             to,
             from: wallet.address,
             value: ethers.parseEther(amount.toString()),
         });
-          
+    
         const feeData = await this.provider.getFeeData();
-        const signedTx = await wallet.signTransaction({
-            to,
-            value: ethers.parseEther(amount.toString()),
-            gasLimit: gasLimit,
-            maxFeePerGas: feeData.maxFeePerGas,
-            maxPriorityFeePerGas: feeData.maxPriorityFeePerGas,
-            nonce: await this.provider.getTransactionCount(wallet.address),
-            chainId: (await this.provider.getNetwork()).chainId,
-            type: 2,
-        });
+        const nonce = await this.provider.getTransactionCount(wallet.address);
+    
+        let tx: any;
+    
+        if (network.chainId === 56n || network.chainId === 97n) {
+            tx = {
+                to,
+                value: ethers.parseEther(amount.toString()),
+                gasLimit,
+                gasPrice: feeData.gasPrice ?? 5_000_000_000n,
+                nonce,
+                chainId: Number(network.chainId),
+                type: 0, 
+            };
+        } else {
+            tx = {
+                to,
+                value: ethers.parseEther(amount.toString()),
+                gasLimit,
+                maxFeePerGas: feeData.maxFeePerGas ?? (feeData.gasPrice ?? 30_000_000_000n),
+                maxPriorityFeePerGas: feeData.maxPriorityFeePerGas ?? 1_500_000_000n,
+                nonce,
+                chainId: Number(network.chainId),
+                type: 2, // EIP-1559
+            };
+        }
+    
+        // Assinar e enviar
+        const signedTx = await wallet.signTransaction(tx);
         return await this.provider.broadcastTransaction(signedTx);
     }
+    
+    
 
-    async getTransactionByHash(hash: string): Promise<any> {
-        return await this.provider.getTransactionReceipt(hash);
+    async getTransactionByHash(hash: string): Promise<TransactionReceipt> {
+        return await this.provider.getTransactionReceipt(hash) as TransactionReceipt;
     }
 
     async transferToken(
@@ -77,18 +99,12 @@ export class EVMChains {
         to: string,
         amount: number,
         contract: string,
-        call?: (hash: string)=> {},
-        sucess?: (tx: any)=> {}
-    ): Promise<any> {
+    ): Promise<TransactionResponseParams> {
         const wallet = new ethers.Wallet(privateKey, this.provider);
         const erc20 = new ethers.Contract(contract, ERC_USDT_ABI, wallet);
         const decimals = await erc20["decimals"]();
         const tx = await erc20["transfer"](to, ethers.parseUnits(amount.toString(), decimals));
-
-        call?.(tx.hash);
         tx.wait();
-        sucess?.(tx);
-
         return tx;
     }
 }
